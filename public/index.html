@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Metrics</title>
+
+    <style>
+        body {
+            background: #0f1115;
+            color: white;
+            font-family: Arial;
+            padding: 40px;
+        }
+
+        .card {
+            background: #1a1d24;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .value {
+            font-size: 28px;
+            font-weight: bold;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <h1>Render Metrics</h1>
+
+    <div class="card">
+        <h2>CPU</h2>
+        <div class="value" id="cpu"></div>
+    </div>
+
+    <div class="card">
+        <h2>RAM</h2>
+        <div class="value" id="ram"></div>
+    </div>
+
+    <div class="card">
+        <h2>DISK</h2>
+        <div class="value" id="disk"></div>
+    </div>
+
+    <div class="card">
+        <h2>NETWORK</h2>
+        <div class="value" id="network"></div>
+    </div>
+
+    <div class="card">
+        <h2>GEO</h2>
+        <pre id="geo"></pre>
+    </div>
+
+    <script>
+
+        const load = async () => {
+
+            const res =
+                await fetch('/api/metrics');
+
+            const data =
+                await res.json();
+
+            document.getElementById('cpu').innerText =
+                data.cpu + '%';
+
+            document.getElementById('ram').innerText =
+                data.ram + '%';
+
+            document.getElementById('disk').innerText =
+                data.disk + '%';
+
+            document.getElementById('network').innerText =
+                `IN ${data.network.in} MB/s | OUT ${data.network.out} MB/s`;
+
+            document.getElementById('geo').innerText =
+                JSON.stringify(data.geo, null, 2);
+        };
+
+        load();
+
+        setInterval(load, 5000);
+
+    </script>
+
+</body>
+
+</html>
