@@ -26,6 +26,16 @@
             font-size: 28px;
             font-weight: bold;
         }
+
+        .small {
+            font-size: 14px;
+            opacity: .8;
+            margin-top: 10px;
+        }
+
+        pre {
+            white-space: pre-wrap;
+        }
     </style>
 
 </head>
@@ -41,7 +51,15 @@
 
     <div class="card">
         <h2>RAM</h2>
-        <div class="value" id="ram"></div>
+
+        <div class="value">
+            <div id="rss"></div>
+        </div>
+
+        <div class="small">
+            <div id="heapUsed"></div>
+            <div id="heapTotal"></div>
+        </div>
     </div>
 
     <div class="card">
@@ -50,7 +68,7 @@
     </div>
 
     <div class="card">
-        <h2>NETWORK</h2>
+        <h2>NETWORK REAL</h2>
         <div class="value" id="network"></div>
     </div>
 
@@ -72,8 +90,14 @@
             document.getElementById('cpu').innerText =
                 data.cpu + '%';
 
-            document.getElementById('ram').innerText =
-                data.ram + '%';
+            document.getElementById('rss').innerText =
+                `RSS ${data.ram.rss} MB`;
+
+            document.getElementById('heapUsed').innerText =
+                `Heap Used: ${data.ram.heapUsed} MB`;
+
+            document.getElementById('heapTotal').innerText =
+                `Heap Total: ${data.ram.heapTotal} MB`;
 
             document.getElementById('disk').innerText =
                 data.disk + '%';
